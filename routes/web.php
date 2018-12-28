@@ -1,4 +1,8 @@
 <?php
+route::pattern('name' ,'(.*)');
+route::pattern('name1' ,'(.*)');
+route::pattern('id', '([0-9]*)');
+route::pattern('code', '(.*)');
 
 /*
 |--------------------------------------------------------------------------
@@ -52,5 +56,15 @@ Route::namespace('SinhVien')->group( function() {
 		Route::post('active-member' , [
 			'uses' => 'UserController@UpdateCode',
 			'as'   => 'active',
+		]);
+
+		Route::get('danh-muc/{name}-{id}' , [
+			'uses' => 'CatController@index',
+			'as'   => 'sinhvien.cat.raovat'
+		]);
+
+		Route::get('{name1}/{name}-{id}.html' , [
+			'uses' => 'DetailController@index_raovat',
+			'as'   => 'sinhvien.detail.detail_raovat'
 		]);
 });

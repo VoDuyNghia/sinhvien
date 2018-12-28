@@ -92,7 +92,7 @@ jquery-confirm.min.js'></script>
 		gtag('config', 'UA-130212929-1');
 	</script>
 	<script>
-		var THEME_URL = '/{{getenv('URL_TEMPLATE_SINHVIEN')}}/wp-content/themes/s2ag';
+		var THEME_URL = '{{getenv('URL_TEMPLATE_SINHVIEN')}}/wp-content/themes/s2ag';
 	</script>
 </head>
 <body>
@@ -146,7 +146,7 @@ jquery-confirm.min.js'></script>
 				</div>
 			</div>
 		</div>
-		<div id="group-search-header">
+	{{-- 	<div id="group-search-header">
 			<form>
 				<div class="row">
 					<div class="col-md-8 col-md-push-2 col-sm-8 col-sm-push-2 col-xs-10 col-xs-push-1">
@@ -198,7 +198,7 @@ jquery-confirm.min.js'></script>
 					btn.removeAttr("disabled");
 				}
 			});
-		</script>
+		</script> --}}
 		<div id="menu-main" class="hidden-sm hidden-xs">
 			<div class="container">
 				<ul id="menu-menu-main" class="menu-main">
@@ -206,7 +206,9 @@ jquery-confirm.min.js'></script>
 					</li>
 
 					@foreach($objCats0 as $value)
-					<li id="menu-item-{{ $value->id_category }}" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-{{ $value->id_category }}"><a href="http://nguoiangiang.com">{{ $value->name_category }}</a>
+					
+
+					<li id="menu-item-{{ $value->id_category }}" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-{{ $value->id_category }}"><a >{{ $value->name_category }}</a>
 			
 
 					@php
@@ -215,11 +217,27 @@ jquery-confirm.min.js'></script>
 						@if(count($objCatParent)>0)
 							<ul class="sub-menu">
 							@foreach($objCatParent as $valueParent)
-								<li id="menu-item-{{ $valueParent->id_category }}" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-{{ $valueParent->id_category }}"><a href="/thoi-trang/">{{ $valueParent->name_category }}</a></li>
+								@php
+								  $arr = [
+								      'name' => str_slug($valueParent->name_category),
+								      'id'   => $valueParent->id_category,
+								  ]
+								@endphp
+								<li id="menu-item-{{ $valueParent->id_category }}" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-{{ $valueParent->id_category }}"><a href="{{ route('sinhvien.cat.raovat',$arr) }}">{{ $valueParent->name_category }}</a></li>
 							@endforeach
 							</ul>
 						@endif
 					</li>
+					@endforeach
+
+					@foreach($objCats1 as $value1)
+						<li id="menu-item-{{ $value1->id_category }}" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-{{ $value1->id_category }}"><a >{{ $value1->name_category }}</a>
+						</li>
+					@endforeach
+
+					@foreach($objCats2 as $value2)
+						<li id="menu-item-{{ $value2->id_category }}" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-{{ $value2->id_category }}"><a >{{ $value2->name_category }}</a>
+						</li>
 					@endforeach
 					<li id="menu-item-25" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-25"><a href="/lien-he/">Liên hệ</a></li>
 				</ul>				
