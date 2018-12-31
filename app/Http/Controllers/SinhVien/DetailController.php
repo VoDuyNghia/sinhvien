@@ -8,14 +8,27 @@ use App\Member;
 use App\Category;
 use App\Raovat;
 use App\Choose;
+use App\Room;
+use App\Total;
 
 class DetailController extends Controller
 {
     public function index_raovat($name1,$name, $id){
-    	$objNewsRaoVat = Raovat::select('tb_raovat.*','tb_choose.*','tb_category.*')->join('tb_choose','tb_choose.id_choose','=','tb_raovat.id_choose')->join('tb_category','tb_category.id_category','=','tb_raovat.id_category')->where('id_raovat', '=', $id)->orderBy('id_raovat', 'DESC')->first();
+    	$objNewsRaoVat = Raovat::select('tb_raovat.*','tb_choose.*','tb_category.*')->join('tb_choose','tb_choose.id_choose','=','tb_raovat.id_choose')->join('tb_category','tb_category.id_category','=','tb_raovat.id_category')->where('active_raovat','=',1)->where('id_raovat', '=', $id)->orderBy('id_raovat', 'DESC')->first();
 
 
-    	$objNewsTinLienQuan = Raovat::select('tb_raovat.*','tb_choose.*','tb_category.*')->join('tb_choose','tb_choose.id_choose','=','tb_raovat.id_choose')->join('tb_category','tb_category.id_category','=','tb_raovat.id_category')->where('tb_raovat.id_category', '=', $objNewsRaoVat->id_category)->orderBy('id_raovat', 'DESC')->take(5)->get();
+    	$objNewsTinLienQuan = Raovat::select('tb_raovat.*','tb_choose.*','tb_category.*')->join('tb_choose','tb_choose.id_choose','=','tb_raovat.id_choose')->join('tb_category','tb_category.id_category','=','tb_raovat.id_category')->where('tb_raovat.id_category','=',$objNewsRaoVat->id_category)->where('active_raovat','=',1)->where('id_raovat','<>',$objNewsRaoVat->id_raovat)->orderBy('id_raovat', 'DESC')->take(5)->get();
     	return view('sinhvien.detail.detail_raovat',compact('objNewsRaoVat','objNewsTinLienQuan'));
+    }
+
+    public function index_room($name, $id){
+
+        $objNewsRoom = Room::select('tb_room.*','tb_totalroom.*','tb_category.*')->join('tb_totalroom','tb_totalroom.id_room','=','tb_room.id_room')->join('tb_category','tb_category.id_category','=','tb_room.id_category')->where('tb_room.id_room', '=', $id)->first();
+
+        $objTotalImg = Total::Where('id_room','=', $id)->get();
+
+        $objNewsRoomLienQuan = Room::select('tb_room.*')->where('id_room','<>',$objNewsRoom->id_room)->where('active_room','=',1)->orderBy('id_room', 'DESC')->take(5)->get();
+
+    	return view('sinhvien.detail.detail_room',compact('objNewsRoom','objTotalImg','objNewsRoomLienQuan'));
     }
 }

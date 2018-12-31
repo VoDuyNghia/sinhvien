@@ -58,13 +58,61 @@ Route::namespace('SinhVien')->group( function() {
 			'as'   => 'active',
 		]);
 
+		/////////////////////////////////////////////
 		Route::get('danh-muc/{name}-{id}' , [
 			'uses' => 'CatController@index',
 			'as'   => 'sinhvien.cat.raovat'
 		]);
 
+
 		Route::get('{name1}/{name}-{id}.html' , [
 			'uses' => 'DetailController@index_raovat',
 			'as'   => 'sinhvien.detail.detail_raovat'
 		]);
+
+		/////////////////////////////////////////////
+		Route::get('{name}-{id}' , [
+			'uses' => 'CatController@indexRoom',
+			'as'   => 'sinhvien.cat.room'
+		]);
+
+		Route::get('{name}-{id}.html' , [
+			'uses' => 'DetailController@index_room',
+			'as'   => 'sinhvien.detail.detail_room'
+		]);
+
+		///
+
+		Route::get('tai-khoan/rao-vat' , [
+			'uses' => 'UserController@getRaoVat',
+			'as'   => 'sinhvien.user.add_raovat'
+		]);
+
+		Route::post('tai-khoan/rao-vat' , [
+			'uses' => 'UserController@postRaoVat',
+			'as'   => 'sinhvien.user.add_raovat'
+		]);
+
+		Route::get('tai-khoan/thue-phong-tro' , [
+			'uses' => 'UserController@getThuePhong',
+			'as'   => 'sinhvien.user.add_room'
+		]);
+
+		Route::post('tai-khoan/thue-phong-tro' , [
+			'uses' => 'UserController@postThuePhong',
+			'as'   => 'sinhvien.user.add_room'
+		]);
+
+
+		Route::get('tai-khoan/tuyen_dung' , [
+			'uses' => 'UserController@getTuyenDung',
+			'as'   => 'sinhvien.user.add_tuyendung'
+		]);
+
+		Route::post('tai-khoan/tuyen_dung' , [
+			'uses' => 'UserController@postTuyenDung',
+			'as'   => 'sinhvien.user.add_tuyendung'
+		]);
+
+
 });

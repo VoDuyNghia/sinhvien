@@ -12,7 +12,7 @@
     <div class="col-md-8 col-xs-12 margin-b10 p-l15" style="padding-left: 0;">
     <div class="listing-title color-border-top home-title" style="padding-bottom: 0;margin-bottom: 10px;">
         <h1 class="color-title pull-left">
-            <a href="">{{ $objNewsRaoVat->name_category }}</a>
+            <a href="{{ route('sinhvien.cat.raovat',$arr) }}">{{ $objNewsRaoVat->name_category }}</a>
         </h1>
         <div class="bread-crumb pull-right">
             <ul class="list-inline-block">
@@ -87,7 +87,34 @@
 					<div class="post-detail margin-b10">
 						<p> <strong>{{ $objNewsRaoVat['detail_raovat'] }}</strong></p>
 
-					<p> {!! $objNewsRaoVat['content_raovat'] !!}</p>
+					<p> {!! $objNewsRaoVat['content_raovat'] !!}</p> <hr/><hr/>
+
+					@if ($objNewsRaoVat['id_choose'] <>4)
+						<div class="header-table bg-01719f"><h3 class="title">THÔNG TIN LIÊN HỆ</h3></div>
+						<table class="table table-bordered table-hover table-striped">
+							<tbody>
+								<tr>
+									<td width="30%">Họ tên</td>
+									<td width="70%">{{  $objNewsRaoVat['username_raovat'] }}</td>
+								</tr>
+								<tr>
+									<td>Số điện thoại liên hệ</td>
+									<td>
+											@if ($objNewsRaoVat['hotline_raovat']<>'')
+												0{{ $objNewsRaoVat['hotline_raovat'] }}
+											@endif
+										
+									</td>
+								</tr>
+								<tr>
+									<td>Facebook</td>
+									<td>
+										{{  $objNewsRaoVat['facebook_raovat'] }}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					@endif
 					</div>
 				</div>
 			</div>
@@ -101,13 +128,15 @@
 	                'name1'  => str_slug($valueTinLienQuan->name_category),
 	                'name'  => str_slug($valueTinLienQuan->title_raovat),
 	                'id'    => $valueTinLienQuan->id_raovat,
-	            ]
+	            ];
+
+	            $urlPic = '/storage/app/public/files/files_raovat/'.$valueTinLienQuan->image_raovat;
 
 	        @endphp
 			<div class="items">
 				<div class="items-img">
 					<a href="{{ route('sinhvien.detail.detail_raovat',$arrNewsLienQuan) }}">
-						<img src="http://nguoiangiang.com/wp-content/uploads/2018/09/co-mot-tieu-vinh-ha-long-tren-dat-ong-thoai.jpg" class="img-responsive" alt="Có một “tiểu Vịnh Hạ Long” trên đất ông Thoại!">
+						<img src="{{ $urlPic }}" alt="{{ $valueTinLienQuan->name_raovat }}">
 					</a>
 				</div>
 				<div class="items-content">
@@ -116,8 +145,13 @@
                         </a>
 					</h4>
 					<p class="items-desc">
-						{{ $valueTinLienQuan->detail_raovat }} </p>
+						{{ $valueTinLienQuan->detail_raovat }} 
+					</p>
+	
+
 				</div>
+
+
 			</div>
 		@endforeach
 	</div>

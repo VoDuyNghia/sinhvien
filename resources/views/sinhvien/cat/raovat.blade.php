@@ -23,7 +23,7 @@
                     ]
                 @endphp
                 <li><a href="{{ route('sinhvien.cat.raovat',$arr) }}"><span class="fa fa-home"> </span></a></li>
-                <li><a href="http://nguoiangiang.com/may-tinh-laptop/">{{ $objCat->name_category }}</a></li>
+                <li><a href="{{ route('sinhvien.cat.raovat',$arr) }}">{{ $objCat->name_category }}</a></li>
             </ul>                                   
         </div>
     </div>
@@ -38,11 +38,12 @@
                                     'name1'  => str_slug($objCat->name_category),
                                     'name'  => str_slug($valuesRaovat->title_raovat),
                                     'id'    => $valuesRaovat->id_raovat,
-                                ]
+                                ];
 
+                                $urlPic = '/storage/app/public/files/files_raovat/'.$valuesRaovat->image_raovat;
                             @endphp
                             <a href="{{ route('sinhvien.detail.detail_raovat',$arrRaoVat) }}" title="{{ $valuesRaovat->title_raovat }}">
-                                <img src="http://nguoiangiang.com/wp-content/uploads/2018/12/dem-bang-ba-chuc.jpg" class="img-responsive" alt="{{ $valuesRaovat->title_raovat }}">
+                                <img src="{{ $urlPic }}" class="img-responsive" alt="{{ $valuesRaovat->title_raovat }}">
                             </a>
                         </div>
                         <div class="items-content">

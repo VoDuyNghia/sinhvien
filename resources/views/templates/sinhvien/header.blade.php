@@ -4,6 +4,7 @@
   session_start();
   ob_start();
 
+
   if(isset($_SESSION['arUser'])){
  	Session::put('id_member', $_SESSION['arUser']['id_member']);
   } else {
@@ -80,6 +81,9 @@ img.emoji {
 <script type='text/javascript' src='{{getenv('URL_TEMPLATE_SINHVIEN')}}/wp-content/themes/s2ag/js/tinymce/tinymce.min.js'></script>
 <script type='text/javascript' src='{{getenv('URL_TEMPLATE_SINHVIEN')}}/wp-content/themes/s2ag/js/
 jquery-confirm.min.js'></script>
+
+        <script type="text/javascript" src="/public/templates/libraries/ckeditor/ckeditor.js"></script>
+        <script type="text/javascript" src="/public/templates/libraries/ckfinder/ckfinder.js"></script>
 <link rel='https://api.w.org/' href='/wp-json/' />
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="/xmlrpc.php?rsd" />
 <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="{{getenv('URL_TEMPLATE_SINHVIEN')}}/wp-includes/wlwmanifest.xml" /> 
@@ -231,7 +235,13 @@ jquery-confirm.min.js'></script>
 					@endforeach
 
 					@foreach($objCats1 as $value1)
-						<li id="menu-item-{{ $value1->id_category }}" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-{{ $value1->id_category }}"><a >{{ $value1->name_category }}</a>
+							@php
+							  $arr1 = [
+							      'name' => str_slug($value1->name_category),
+							      'id'   => $value1->id_category,
+							  ]
+							@endphp
+						<li id="menu-item-{{ $value1->id_category }}" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-{{ $value1->id_category }}"><a href='{{ route('sinhvien.cat.room',$arr1) }}'>{{ $value1->name_category }}</a>
 						</li>
 					@endforeach
 
